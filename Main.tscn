@@ -9,5 +9,6 @@ width = 10.0
 height = 0.1
 depth = 10.0
 
-[node name="Camera" type="Camera" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.28703, 3.3405 )
+[node name="Player" type="Spatial" parent="."]
+
+[node name="Camera" type="Camera" parent="Player"]
