@@ -1,3 +1,13 @@
 [gd_scene format=2]
 
 [node name="Main" type="Spatial"]
+
+[node name="Map" type="CSGCombiner" parent="."]
+
+[node name="Floor" type="CSGBox" parent="Map"]
+width = 10.0
+height = 0.1
+depth = 10.0
+
+[node name="Camera" type="Camera" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.28703, 3.3405 )
