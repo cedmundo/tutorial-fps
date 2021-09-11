@@ -10,6 +10,7 @@ func _input(event):
 		var coords = event.get_relative()
 		rotate_y(-coords.x * 0.01)
 		camera.rotate_x(-coords.y * 0.01)
+		camera.rotation.x = clamp(camera.rotation.x, deg2rad(-89), deg2rad(89))
 
 	if event.is_action_pressed("ui_cancel"):
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
