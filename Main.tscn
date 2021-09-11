@@ -14,5 +14,7 @@ depth = 10.0
 [node name="Player" type="Spatial" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.52212, 2.9848 )
 script = ExtResource( 1 )
+vertical_sensibility = 0.2
+horizontal_sensibility = 0.2
 
 [node name="Camera" type="Camera" parent="Player"]
