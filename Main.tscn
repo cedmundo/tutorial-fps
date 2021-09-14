@@ -1,20 +1,43 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://Player.gd" type="Script" id=1]
+
+[sub_resource type="CapsuleShape" id=1]
+height = 1.7
+
+[sub_resource type="CapsuleMesh" id=2]
+mid_height = 1.7
 
 [node name="Main" type="Spatial"]
 
 [node name="Map" type="CSGCombiner" parent="."]
+use_collision = true
 
 [node name="Floor" type="CSGBox" parent="Map"]
-width = 10.0
+width = 40.0
 height = 0.1
-depth = 10.0
+depth = 40.0
 
-[node name="Player" type="Spatial" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.52212, 2.9848 )
+[node name="Wall" type="CSGBox" parent="Map"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.56989, -1.21587 )
+width = 9.55844
+height = 5.04764
+depth = 0.349742
+
+[node name="Player" type="KinematicBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.9201, 2.9848 )
 script = ExtResource( 1 )
 vertical_sensibility = 0.2
 horizontal_sensibility = 0.2
 
 [node name="Camera" type="Camera" parent="Player"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.20406, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Player"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0 )
+shape = SubResource( 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Player"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0 )
+mesh = SubResource( 2 )
+material/0 = null
