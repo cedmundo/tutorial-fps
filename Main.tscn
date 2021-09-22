@@ -2,13 +2,13 @@
 
 [ext_resource path="res://Player.gd" type="Script" id=1]
 
-[sub_resource type="SpatialMaterial" id=3]
+[sub_resource type="SpatialMaterial" id=1]
 albedo_color = Color( 0.34902, 0.34902, 0.34902, 1 )
 
-[sub_resource type="CapsuleShape" id=1]
+[sub_resource type="CapsuleShape" id=2]
 height = 1.7
 
-[sub_resource type="CapsuleMesh" id=2]
+[sub_resource type="CapsuleMesh" id=3]
 mid_height = 1.7
 
 [node name="Main" type="Spatial"]
@@ -20,7 +20,7 @@ use_collision = true
 width = 40.0
 height = 0.1
 depth = 40.0
-material = SubResource( 3 )
+material = SubResource( 1 )
 
 [node name="Wall" type="CSGBox" parent="Map"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.56989, -1.21587 )
@@ -45,11 +45,11 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.20406, 0 )
 
 [node name="CollisionShape" type="CollisionShape" parent="Player"]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0 )
-shape = SubResource( 1 )
+shape = SubResource( 2 )
 
 [node name="MeshInstance" type="MeshInstance" parent="Player"]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0 )
-mesh = SubResource( 2 )
+mesh = SubResource( 3 )
 material/0 = null
 
 [node name="DirectionalLight" type="DirectionalLight" parent="."]
