@@ -16,6 +16,7 @@ var gravity_vec = Vector3.ZERO
 var snap = Vector3.ZERO
 
 onready var camera = $Camera
+onready var weapon_camera = $Camera/WeaponViewport/Viewport/WeaponCamera
 
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
@@ -34,6 +35,8 @@ func _input(event):
 	if event.is_action_pressed("ui_cancel"):
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 
+func _process(_delta):
+	weapon_camera.global_transform = camera.global_transform
 
 func _physics_process(delta):
 	var input_strength : Vector2 = Vector2.ZERO
