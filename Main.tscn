@@ -1,22 +1,10 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://Player.gd" type="Script" id=1]
+[ext_resource path="res://Player.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Enemy.tscn" type="PackedScene" id=2]
 
 [sub_resource type="SpatialMaterial" id=1]
 albedo_color = Color( 0.34902, 0.34902, 0.34902, 1 )
-
-[sub_resource type="SpatialMaterial" id=4]
-albedo_color = Color( 0.411765, 0.447059, 0.580392, 1 )
-
-[sub_resource type="CubeMesh" id=5]
-material = SubResource( 4 )
-size = Vector3( 0.2, 0.2, 2 )
-
-[sub_resource type="CapsuleShape" id=2]
-height = 1.7
-
-[sub_resource type="CapsuleMesh" id=3]
-mid_height = 1.7
 
 [node name="Main" type="Spatial"]
 
@@ -41,44 +29,17 @@ width = 8.24135
 height = 0.505652
 depth = 6.6358
 
-[node name="Player" type="KinematicBody" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4.76837e-07, 6.65208, 9.66972 )
-script = ExtResource( 1 )
-vertical_sensibility = 0.2
-horizontal_sensibility = 0.2
+[node name="Player" parent="." instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.64922, 10.0244 )
 
-[node name="Camera" type="Camera" parent="Player"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.20406, 0 )
-cull_mask = 1048573
+[node name="Enemy" parent="." instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -15.5345, 1.85, -6.71455 )
 
-[node name="Weapon" type="MeshInstance" parent="Player/Camera"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.343985, -0.409321, -0.883709 )
-layers = 2
-mesh = SubResource( 5 )
-material/0 = null
+[node name="Enemy2" parent="." instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -15.5345, 1.85, -13.8682 )
 
-[node name="WeaponViewport" type="ViewportContainer" parent="Player/Camera"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Viewport" type="Viewport" parent="Player/Camera/WeaponViewport"]
-size = Vector2( 1024, 600 )
-transparent_bg = true
-
-[node name="WeaponCamera" type="Camera" parent="Player/Camera/WeaponViewport/Viewport"]
-cull_mask = 2
-
-[node name="CollisionShape" type="CollisionShape" parent="Player"]
-transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0 )
-shape = SubResource( 2 )
-
-[node name="MeshInstance" type="MeshInstance" parent="Player"]
-transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0 )
-mesh = SubResource( 3 )
-material/0 = null
+[node name="Enemy3" parent="." instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -15.5345, 1.85, -10.218 )
 
 [node name="DirectionalLight" type="DirectionalLight" parent="."]
 transform = Transform( 1, 0, 0, 0, 0.83907, 0.544024, 0, -0.544024, 0.83907, 0, 12.6617, 12.2597 )
