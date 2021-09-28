@@ -1,5 +1,7 @@
 extends KinematicBody
 
+const aim_pushback_offset = 0.1
+
 export(float) var vertical_sensibility = 0.1
 export(float) var horizontal_sensibility = 0.1
 export(float) var vertical_rotation_limit = 89
@@ -10,6 +12,7 @@ export(float) var walking_jump_power = 2.0
 export(float) var sprint_jump_power = 3.0
 export(float) var ground_acceleration = 8.0
 export(float) var air_acceleration = 4.0
+export(float) var gun_damage = 20.0
 
 var velocity = Vector3.ZERO
 var gravity_vec = Vector3.ZERO
@@ -17,6 +20,8 @@ var snap = Vector3.ZERO
 
 onready var camera = $Camera
 onready var weapon_camera = $Camera/WeaponViewport/Viewport/WeaponCamera
+onready var aim_ray = $Camera/AimRay
+onready var muzzle = $Camera/Weapon/Muzzle
 
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
@@ -76,3 +81,20 @@ func _physics_process(delta):
 	
 	velocity = velocity.linear_interpolate(direction * speed, acceleration * delta)
 	velocity = move_and_slide_with_snap(velocity + gravity_vec, snap, Vector3.UP)
+
+	# Aiming and shooting
+	if Input.is_action_just_pressed("fire"):
+		var space = get_world().direct_space_state
+		var collision_point = aim_ray.get_collision_point()
+		var slightly_behind = (
+			collision_point - camera.global_transform.basis.z *
+			aim_pushback_offset
+		)
+		var hit = space.intersect_ray(
+			muzzle.global_transform.origin,
+			slightly_behind
+		)
+		if hit and hit.collider:
+			var collider = hit.collider
+			if collider and collider.is_in_group("enemies"):
+				collider.deal_damage(gun_damage)

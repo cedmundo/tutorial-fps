@@ -9,3 +9,5 @@ func deal_damage(amount):
 	if health <= 0:
 		health = 0
 		queue_free()
+
+	print(name, " ouch ... ", health)

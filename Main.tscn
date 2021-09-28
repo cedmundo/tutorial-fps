@@ -33,13 +33,13 @@ depth = 6.6358
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.64922, 10.0244 )
 
 [node name="Enemy" parent="." instance=ExtResource( 2 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -15.5345, 1.85, -6.71455 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -15.5345, 1.85, 13.0921 )
 
 [node name="Enemy2" parent="." instance=ExtResource( 2 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -15.5345, 1.85, -13.8682 )
 
 [node name="Enemy3" parent="." instance=ExtResource( 2 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -15.5345, 1.85, -10.218 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 9.46287, 1.85, -14.0093 )
 
 [node name="DirectionalLight" type="DirectionalLight" parent="."]
 transform = Transform( 1, 0, 0, 0, 0.83907, 0.544024, 0, -0.544024, 0.83907, 0, 12.6617, 12.2597 )

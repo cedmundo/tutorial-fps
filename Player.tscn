@@ -17,6 +17,8 @@ mid_height = 1.7
 
 [node name="Player" type="KinematicBody"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.85, 0 )
+collision_layer = 2
+collision_mask = 3
 script = ExtResource( 1 )
 vertical_sensibility = 0.2
 horizontal_sensibility = 0.2
@@ -30,6 +32,9 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.343985, -0.409321, -0.883709
 layers = 2
 mesh = SubResource( 2 )
 material/0 = null
+
+[node name="Muzzle" type="Spatial" parent="Camera/Weapon"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.03934 )
 
 [node name="WeaponViewport" type="ViewportContainer" parent="Camera"]
 anchor_right = 1.0
@@ -46,6 +51,10 @@ render_target_update_mode = 3
 
 [node name="WeaponCamera" type="Camera" parent="Camera/WeaponViewport/Viewport"]
 cull_mask = 2
+
+[node name="AimRay" type="RayCast" parent="Camera"]
+enabled = true
+cast_to = Vector3( 0, 0, -1000 )
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0 )
