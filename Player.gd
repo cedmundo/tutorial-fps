@@ -22,9 +22,11 @@ onready var camera = $Camera
 onready var weapon_camera = $Camera/WeaponViewport/Viewport/WeaponCamera
 onready var aim_ray = $Camera/AimRay
 onready var muzzle = $Camera/Weapon/Muzzle
+onready var weapon_anim = $WeaponAnimationPlayer
 
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	weapon_anim.play_backwards("ADS")
 
 func _input(event):
 	if event is InputEventMouseMotion:
@@ -42,6 +44,11 @@ func _input(event):
 
 func _process(_delta):
 	weapon_camera.global_transform = camera.global_transform
+	if Input.is_action_just_pressed("ads"):
+		weapon_anim.play("ADS")
+		
+	if Input.is_action_just_released("ads"):
+		weapon_anim.play_backwards("ADS")
 
 func _physics_process(delta):
 	var input_strength : Vector2 = Vector2.ZERO

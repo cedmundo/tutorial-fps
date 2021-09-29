@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Player.gd" type="Script" id=1]
 
@@ -15,6 +15,29 @@ height = 1.7
 [sub_resource type="CapsuleMesh" id=4]
 mid_height = 1.7
 
+[sub_resource type="Animation" id=5]
+resource_name = "ADS"
+length = 0.2
+tracks/0/type = "transform"
+tracks/0/path = NodePath("Camera/Weapon")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = PoolRealArray(  )
+tracks/1/type = "value"
+tracks/1/path = NodePath("Camera/Weapon:translation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0.343985, -0.409321, -0.883709 ), Vector3( 0, -0.211, -0.884 ) ]
+}
+
 [node name="Player" type="KinematicBody"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.85, 0 )
 collision_layer = 2
@@ -29,7 +52,7 @@ cull_mask = 1048573
 
 [node name="Weapon" type="MeshInstance" parent="Camera"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.343985, -0.409321, -0.883709 )
-layers = 2
+layers = 3
 mesh = SubResource( 2 )
 material/0 = null
 
@@ -64,3 +87,6 @@ shape = SubResource( 3 )
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0 )
 mesh = SubResource( 4 )
 material/0 = null
+
+[node name="WeaponAnimationPlayer" type="AnimationPlayer" parent="."]
+anims/ADS = SubResource( 5 )
