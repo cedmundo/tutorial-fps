@@ -1,6 +1,7 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Player.gd" type="Script" id=1]
+[ext_resource path="res://assets/crosshair_dot.svg" type="Texture" id=2]
 
 [sub_resource type="SpatialMaterial" id=1]
 albedo_color = Color( 0.411765, 0.447059, 0.580392, 1 )
@@ -52,7 +53,7 @@ cull_mask = 1048573
 
 [node name="Weapon" type="MeshInstance" parent="Camera"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.343985, -0.409321, -0.883709 )
-layers = 3
+layers = 2
 mesh = SubResource( 2 )
 material/0 = null
 
@@ -90,3 +91,18 @@ material/0 = null
 
 [node name="WeaponAnimationPlayer" type="AnimationPlayer" parent="."]
 anims/ADS = SubResource( 5 )
+
+[node name="Dot" type="TextureRect" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -20.0
+margin_top = -20.0
+margin_right = 20.0
+margin_bottom = 20.0
+texture = ExtResource( 2 )
+stretch_mode = 4
+__meta__ = {
+"_edit_use_anchors_": false
+}

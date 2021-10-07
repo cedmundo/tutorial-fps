@@ -93,15 +93,16 @@ func _physics_process(delta):
 	if Input.is_action_just_pressed("fire"):
 		var space = get_world().direct_space_state
 		var collision_point = aim_ray.get_collision_point()
-		var slightly_behind = (
-			collision_point - camera.global_transform.basis.z *
-			aim_pushback_offset
-		)
-		var hit = space.intersect_ray(
-			muzzle.global_transform.origin,
-			slightly_behind
-		)
-		if hit and hit.collider:
-			var collider = hit.collider
-			if collider and collider.is_in_group("enemies"):
-				collider.deal_damage(gun_damage)
+		if aim_ray.is_colliding():
+			var slightly_behind = (
+				collision_point - camera.global_transform.basis.z *
+				aim_pushback_offset
+			)
+			var hit = space.intersect_ray(
+				muzzle.global_transform.origin,
+				slightly_behind
+			)
+			if hit and hit.collider:
+				var collider = hit.collider
+				if collider.is_in_group("enemies"):
+					collider.deal_damage(gun_damage)
