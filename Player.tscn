@@ -1,7 +1,9 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Player.gd" type="Script" id=1]
 [ext_resource path="res://assets/crosshair_dot.svg" type="Texture" id=2]
+[ext_resource path="res://assets/crosshair_vertical_bar.svg" type="Texture" id=3]
+[ext_resource path="res://assets/crosshair_horizontal_bar.svg" type="Texture" id=4]
 
 [sub_resource type="SpatialMaterial" id=1]
 albedo_color = Color( 0.411765, 0.447059, 0.580392, 1 )
@@ -92,17 +94,58 @@ material/0 = null
 [node name="WeaponAnimationPlayer" type="AnimationPlayer" parent="."]
 anims/ADS = SubResource( 5 )
 
-[node name="Dot" type="TextureRect" parent="."]
+[node name="Crosshair" type="VBoxContainer" parent="."]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -20.0
-margin_top = -20.0
-margin_right = 20.0
+margin_left = -29.0
+margin_top = -29.0
+margin_right = 29.0
+margin_bottom = 29.0
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TopBar" type="TextureRect" parent="Crosshair"]
+margin_right = 58.0
 margin_bottom = 20.0
+texture = ExtResource( 3 )
+stretch_mode = 4
+
+[node name="Center" type="HBoxContainer" parent="Crosshair"]
+margin_top = 24.0
+margin_right = 58.0
+margin_bottom = 34.0
+alignment = 1
+
+[node name="LeftBar" type="TextureRect" parent="Crosshair/Center"]
+margin_right = 20.0
+margin_bottom = 10.0
+texture = ExtResource( 4 )
+stretch_mode = 4
+
+[node name="Dot" type="TextureRect" parent="Crosshair/Center"]
+margin_left = 24.0
+margin_right = 34.0
+margin_bottom = 10.0
 texture = ExtResource( 2 )
 stretch_mode = 4
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="RightBar" type="TextureRect" parent="Crosshair/Center"]
+margin_left = 38.0
+margin_right = 58.0
+margin_bottom = 10.0
+texture = ExtResource( 4 )
+stretch_mode = 4
+
+[node name="BottomBar" type="TextureRect" parent="Crosshair"]
+margin_top = 38.0
+margin_right = 58.0
+margin_bottom = 58.0
+texture = ExtResource( 3 )
+stretch_mode = 4
