@@ -41,6 +41,18 @@ tracks/1/keys = {
 "update": 0,
 "values": [ Vector3( 0.343985, -0.409321, -0.883709 ), Vector3( 0, -0.211, -0.884 ) ]
 }
+tracks/2/type = "value"
+tracks/2/path = NodePath("Crosshair:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.05 ),
+"transitions": PoolRealArray( 1, 0.108819 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
 
 [node name="Player" type="KinematicBody"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.85, 0 )
