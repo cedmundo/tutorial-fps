@@ -1,6 +1,5 @@
 extends KinematicBody
 
-const aim_pushback_offset = 0.1
 const speed_threshold = 0.1
 
 export(float) var vertical_sensibility = 0.1
@@ -13,7 +12,6 @@ export(float) var walking_jump_power = 2.0
 export(float) var sprint_jump_power = 3.0
 export(float) var ground_acceleration = 8.0
 export(float) var air_acceleration = 4.0
-export(float) var gun_damage = 20.0
 export(float) var standing_accuracy = 60.0
 export(float) var walking_accuracy = 30.0
 export(float) var sprinting_accuracy = 10.0
@@ -33,6 +31,7 @@ onready var aim_ray = $Camera/AimRay
 onready var muzzle = $Camera/Weapon/Muzzle
 onready var weapon_anim = $WeaponAnimationPlayer
 onready var crosshair = $Crosshair
+onready var weapon = $Camera/Weapon
 
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
@@ -117,18 +116,4 @@ func _physics_process(delta):
 
 	# Aiming and shooting
 	if Input.is_action_just_pressed("fire"):
-		var space = get_world().direct_space_state
-		var collision_point = aim_ray.get_collision_point()
-		if aim_ray.is_colliding():
-			var slightly_behind = (
-				collision_point - camera.global_transform.basis.z *
-				aim_pushback_offset
-			)
-			var hit = space.intersect_ray(
-				muzzle.global_transform.origin,
-				slightly_behind
-			)
-			if hit and hit.collider:
-				var collider = hit.collider
-				if collider.is_in_group("enemies"):
-					collider.deal_damage(gun_damage)
+		weapon.shoot(accuracy)

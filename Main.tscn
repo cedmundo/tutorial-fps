@@ -31,7 +31,6 @@ depth = 6.6358
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.64922, 10.0244 )
-gun_damage = 25.0
 
 [node name="Enemy" parent="." instance=ExtResource( 2 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -15.5345, 1.85, 13.0921 )

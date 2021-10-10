@@ -1,10 +1,11 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Player.gd" type="Script" id=1]
 [ext_resource path="res://assets/crosshair_dot.svg" type="Texture" id=2]
 [ext_resource path="res://assets/crosshair_vertical_bar.svg" type="Texture" id=3]
 [ext_resource path="res://assets/crosshair_horizontal_bar.svg" type="Texture" id=4]
 [ext_resource path="res://Crosshair.gd" type="Script" id=5]
+[ext_resource path="res://Weapon.gd" type="Script" id=6]
 
 [sub_resource type="SpatialMaterial" id=1]
 albedo_color = Color( 0.411765, 0.447059, 0.580392, 1 )
@@ -71,6 +72,12 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.343985, -0.409321, -0.883709
 layers = 2
 mesh = SubResource( 2 )
 material/0 = null
+script = ExtResource( 6 )
+aim_ray_path = NodePath("../AimRay")
+camera_path = NodePath("..")
+muzzle_path = NodePath("Muzzle")
+player_path = NodePath("../..")
+recoil_pattern = [ Vector2( 1, 2 ), Vector2( 1, -1 ), Vector2( 1, 3 ) ]
 
 [node name="Muzzle" type="Spatial" parent="Camera/Weapon"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.03934 )
