@@ -54,6 +54,7 @@ func _process(delta):
 	# Visualize the accuracy
 	accuracy = lerp(accuracy, target_accuracy + weapon.accuracy_bonus, accuracy_change_speed * delta)
 	crosshair.accuracy = accuracy
+	weapon.accuracy = accuracy
 
 func _physics_process(delta):
 	var input_strength : Vector2 = Vector2.ZERO
@@ -106,6 +107,3 @@ func _physics_process(delta):
 		target_accuracy = standing_accuracy
 		weapon.is_moving = false
 
-	# Aiming and shooting
-	if Input.is_action_just_pressed("fire"):
-		weapon.shoot(accuracy)

@@ -1,5 +1,10 @@
 extends MeshInstance
 
+enum FireMode {
+	FULL_AUTO,
+	SEMI_AUTO
+}
+
 const aim_pushback_offset = 0.1
 
 export(NodePath) var aim_ray_path : NodePath
@@ -11,6 +16,8 @@ export(NodePath) var crosshair_path : NodePath
 export(Array, Vector2) var recoil_pattern : Array
 export(float) var damage = 20.0
 export(float) var ads_accuracy_bonus = 30.0
+export(FireMode) var fire_mode = FireMode.SEMI_AUTO
+export(float) var fire_rate_secs = 0.2
 
 onready var aim_ray = get_node(aim_ray_path)
 onready var camera = get_node(camera_path)
@@ -21,8 +28,10 @@ onready var crosshair = get_node(crosshair_path)
 
 var recoil_position = 0
 var accuracy_bonus : float
+var accuracy : float
 var is_ads = false
 var is_moving = false
+var is_shooting = false
 	
 func _process(_delta):
 	if Input.is_action_just_pressed("ads"):
@@ -35,13 +44,33 @@ func _process(_delta):
 		is_ads = false
 		crosshair.modulate = Color(1, 1, 1, 1)
 		
+	# Aiming and shooting
+	if fire_mode == FireMode.SEMI_AUTO:
+		if Input.is_action_just_pressed("fire"):
+			shoot()
+	elif fire_mode == FireMode.FULL_AUTO:
+		if Input.is_action_just_pressed("fire"):
+			is_shooting = true
+			keep_shooting()
+			
+		if Input.is_action_just_released("fire"):
+			is_shooting = false
+		
+	# Update animation tree parameters
 	animation_tree.set("parameters/conditions/IsADS", is_ads)
 	animation_tree.set("parameters/conditions/NotIsADS", not is_ads)
 	animation_tree.set("parameters/conditions/IsMoving", is_moving)
 	animation_tree.set("parameters/conditions/NotIsMoving", not is_moving)
-	
 
-func shoot(accuracy : float):
+func keep_shooting():
+	if not is_shooting:
+		return
+		
+	shoot()
+	yield(get_tree().create_timer(fire_rate_secs), "timeout")
+	keep_shooting()
+
+func shoot():
 	var space = get_world().direct_space_state
 	var collision_point = aim_ray.get_collision_point()
 	if aim_ray.is_colliding():

@@ -70,43 +70,43 @@ tracks/0/keys = {
 "values": [ Vector3( 0.343985, -0.409321, -0.883709 ), Vector3( 0.244, -0.409, -0.884 ), Vector3( 0.343985, -0.409321, -0.883709 ), Vector3( 0.444, -0.409, -0.884 ), Vector3( 0.343985, -0.409321, -0.883709 ) ]
 }
 
-[sub_resource type="AnimationNodeAnimation" id=11]
+[sub_resource type="AnimationNodeAnimation" id=8]
 animation = "ADS"
 
-[sub_resource type="AnimationNodeAnimation" id=10]
+[sub_resource type="AnimationNodeAnimation" id=9]
 animation = "Steady"
 
-[sub_resource type="AnimationNodeAnimation" id=14]
+[sub_resource type="AnimationNodeAnimation" id=10]
 animation = "Sway"
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=12]
+[sub_resource type="AnimationNodeStateMachineTransition" id=11]
 advance_condition = "IsADS"
 xfade_time = 0.2
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=13]
+[sub_resource type="AnimationNodeStateMachineTransition" id=12]
 advance_condition = "NotIsADS"
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=15]
+[sub_resource type="AnimationNodeStateMachineTransition" id=13]
 advance_condition = "IsMoving"
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=16]
+[sub_resource type="AnimationNodeStateMachineTransition" id=14]
 advance_condition = "NotIsMoving"
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=17]
+[sub_resource type="AnimationNodeStateMachineTransition" id=15]
 advance_condition = "IsADS"
 xfade_time = 0.2
 
-[sub_resource type="AnimationNodeStateMachine" id=8]
-states/ADS/node = SubResource( 11 )
+[sub_resource type="AnimationNodeStateMachine" id=16]
+states/ADS/node = SubResource( 8 )
 states/ADS/position = Vector2( 640, 90 )
-states/Steady/node = SubResource( 10 )
+states/Steady/node = SubResource( 9 )
 states/Steady/position = Vector2( 366, 90 )
-states/Sway/node = SubResource( 14 )
+states/Sway/node = SubResource( 10 )
 states/Sway/position = Vector2( 511, 224 )
-transitions = [ "Steady", "ADS", SubResource( 12 ), "ADS", "Steady", SubResource( 13 ), "Steady", "Sway", SubResource( 15 ), "Sway", "Steady", SubResource( 16 ), "Sway", "ADS", SubResource( 17 ) ]
+transitions = [ "Steady", "ADS", SubResource( 11 ), "ADS", "Steady", SubResource( 12 ), "Steady", "Sway", SubResource( 13 ), "Sway", "Steady", SubResource( 14 ), "Sway", "ADS", SubResource( 15 ) ]
 start_node = "Steady"
 
-[sub_resource type="AnimationNodeStateMachinePlayback" id=9]
+[sub_resource type="AnimationNodeStateMachinePlayback" id=17]
 
 [node name="Player" type="KinematicBody"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.85, 0 )
@@ -132,7 +132,8 @@ muzzle_path = NodePath("Muzzle")
 player_path = NodePath("../..")
 animation_tree_path = NodePath("../../AnimationTree")
 crosshair_path = NodePath("../../Crosshair")
-recoil_pattern = [ Vector2( 1, 2 ), Vector2( 1, -1 ), Vector2( 1, 3 ) ]
+recoil_pattern = [ Vector2( 0.5, 0.5 ), Vector2( 0.1, 0.1 ), Vector2( 0.2, 0.2 ) ]
+fire_mode = 0
 
 [node name="Muzzle" type="Spatial" parent="Camera/Weapon"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.03934 )
@@ -229,10 +230,10 @@ texture = ExtResource( 3 )
 stretch_mode = 4
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
-tree_root = SubResource( 8 )
+tree_root = SubResource( 16 )
 anim_player = NodePath("../AnimationPlayer")
 active = true
-parameters/playback = SubResource( 9 )
+parameters/playback = SubResource( 17 )
 parameters/conditions/IsADS = false
 parameters/conditions/IsMoving = false
 parameters/conditions/NotIsADS = true
