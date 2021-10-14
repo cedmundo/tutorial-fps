@@ -6,15 +6,40 @@ export(NodePath) var aim_ray_path : NodePath
 export(NodePath) var camera_path : NodePath
 export(NodePath) var muzzle_path : NodePath
 export(NodePath) var player_path : NodePath
+export(NodePath) var animation_tree_path : NodePath
+export(NodePath) var crosshair_path : NodePath
 export(Array, Vector2) var recoil_pattern : Array
 export(float) var damage = 20.0
+export(float) var ads_accuracy_bonus = 30.0
 
 onready var aim_ray = get_node(aim_ray_path)
 onready var camera = get_node(camera_path)
 onready var muzzle = get_node(muzzle_path)
 onready var player = get_node(player_path)
+onready var animation_tree = get_node(animation_tree_path)
+onready var crosshair = get_node(crosshair_path)
 
 var recoil_position = 0
+var accuracy_bonus : float
+var is_ads = false
+var is_moving = false
+	
+func _process(_delta):
+	if Input.is_action_just_pressed("ads"):
+		accuracy_bonus = ads_accuracy_bonus
+		is_ads = true
+		crosshair.modulate = Color(1, 1, 1, 0)
+		
+	if Input.is_action_just_released("ads"):
+		accuracy_bonus = 0
+		is_ads = false
+		crosshair.modulate = Color(1, 1, 1, 1)
+		
+	animation_tree.set("parameters/conditions/IsADS", is_ads)
+	animation_tree.set("parameters/conditions/NotIsADS", not is_ads)
+	animation_tree.set("parameters/conditions/IsMoving", is_moving)
+	animation_tree.set("parameters/conditions/NotIsMoving", not is_moving)
+	
 
 func shoot(accuracy : float):
 	var space = get_world().direct_space_state

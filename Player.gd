@@ -15,7 +15,6 @@ export(float) var air_acceleration = 4.0
 export(float) var standing_accuracy = 60.0
 export(float) var walking_accuracy = 30.0
 export(float) var sprinting_accuracy = 10.0
-export(float) var ads_accuracy_bonus = 30.0
 export(float) var accuracy_change_speed = 15.0
 
 var velocity = Vector3.ZERO
@@ -23,19 +22,16 @@ var gravity_vec = Vector3.ZERO
 var snap = Vector3.ZERO
 var target_accuracy : float
 var accuracy : float
-var accuracy_bonus : float
 
 onready var camera = $Camera
 onready var weapon_camera = $Camera/WeaponViewport/Viewport/WeaponCamera
 onready var aim_ray = $Camera/AimRay
 onready var muzzle = $Camera/Weapon/Muzzle
-onready var weapon_anim = $WeaponAnimationPlayer
 onready var crosshair = $Crosshair
 onready var weapon = $Camera/Weapon
 
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-	weapon_anim.play_backwards("ADS")
 	target_accuracy = standing_accuracy
 
 func _input(event):
@@ -54,16 +50,9 @@ func _input(event):
 
 func _process(delta):
 	weapon_camera.global_transform = camera.global_transform
-	if Input.is_action_just_pressed("ads"):
-		weapon_anim.play("ADS")
-		accuracy_bonus = ads_accuracy_bonus
-		
-	if Input.is_action_just_released("ads"):
-		weapon_anim.play_backwards("ADS")
-		accuracy_bonus = 0
 	
 	# Visualize the accuracy
-	accuracy = lerp(accuracy, target_accuracy + accuracy_bonus, accuracy_change_speed * delta)
+	accuracy = lerp(accuracy, target_accuracy + weapon.accuracy_bonus, accuracy_change_speed * delta)
 	crosshair.accuracy = accuracy
 
 func _physics_process(delta):
@@ -109,10 +98,13 @@ func _physics_process(delta):
 	var ideal_velocity = direction * speed + gravity_vec
 	if abs(sprint_speed - ideal_velocity.length()) <= speed_threshold:
 		target_accuracy = sprinting_accuracy
+		weapon.is_moving = true
 	elif abs(walking_speed - ideal_velocity.length()) <= speed_threshold:
 		target_accuracy = walking_accuracy
+		weapon.is_moving = true
 	else:
 		target_accuracy = standing_accuracy
+		weapon.is_moving = false
 
 	# Aiming and shooting
 	if Input.is_action_just_pressed("fire"):
