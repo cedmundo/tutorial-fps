@@ -13,11 +13,13 @@ export(NodePath) var muzzle_path : NodePath
 export(NodePath) var player_path : NodePath
 export(NodePath) var animation_tree_path : NodePath
 export(NodePath) var crosshair_path : NodePath
+export(NodePath) var ammo_label_path : NodePath
 export(Array, Vector2) var recoil_pattern : Array
 export(float) var damage = 20.0
 export(float) var ads_accuracy_bonus = 30.0
 export(FireMode) var fire_mode = FireMode.SEMI_AUTO
 export(float) var fire_rate_secs = 0.2
+export(int) var magazine_capacity = 5
 
 onready var aim_ray = get_node(aim_ray_path)
 onready var camera = get_node(camera_path)
@@ -25,6 +27,7 @@ onready var muzzle = get_node(muzzle_path)
 onready var player = get_node(player_path)
 onready var animation_tree = get_node(animation_tree_path)
 onready var crosshair = get_node(crosshair_path)
+onready var ammo_label = get_node(ammo_label_path)
 
 var recoil_position = 0
 var accuracy_bonus : float
@@ -32,6 +35,7 @@ var accuracy : float
 var is_ads = false
 var is_moving = false
 var is_shooting = false
+var magazine = magazine_capacity
 	
 func _process(_delta):
 	if Input.is_action_just_pressed("ads"):
@@ -56,6 +60,12 @@ func _process(_delta):
 		if Input.is_action_just_released("fire"):
 			is_shooting = false
 		
+	# Reload
+	if Input.is_action_just_pressed("reload"):
+		reload()
+		
+	ammo_label.text = "Ammo: %s/%s" % [magazine, player.ammo]
+		
 	# Update animation tree parameters
 	animation_tree.set("parameters/conditions/IsADS", is_ads)
 	animation_tree.set("parameters/conditions/NotIsADS", not is_ads)
@@ -71,6 +81,11 @@ func keep_shooting():
 	keep_shooting()
 
 func shoot():
+	if magazine == 0:
+		return
+		
+	magazine = clamp(magazine - 1, 0, magazine_capacity)
+		
 	var space = get_world().direct_space_state
 	var collision_point = aim_ray.get_collision_point()
 	if aim_ray.is_colliding():
@@ -93,3 +108,13 @@ func shoot():
 		var push_camera_to = recoil_pattern[recoil_position % total_patterns]
 		player.rotate_y(deg2rad(push_camera_to.y) / (accuracy / 100))
 		camera.rotate_x(deg2rad(push_camera_to.x) / (accuracy / 100))
+
+func reload():
+	var missing = magazine_capacity - magazine
+	var taking = min(missing, player.ammo)
+	if missing == 0 or player.ammo == 0:
+		return
+		
+	player.ammo = player.ammo - taking
+	magazine = magazine + taking
+	print("capacity: ", magazine_capacity, " magazine: ", magazine, " taking: ", taking, " missing: ", missing, " ammo: ", player.ammo)

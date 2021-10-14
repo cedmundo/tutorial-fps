@@ -132,6 +132,7 @@ muzzle_path = NodePath("Muzzle")
 player_path = NodePath("../..")
 animation_tree_path = NodePath("../../AnimationTree")
 crosshair_path = NodePath("../../Crosshair")
+ammo_label_path = NodePath("../../AmmoLabel")
 recoil_pattern = [ Vector2( 0.5, 0.5 ), Vector2( 0.1, 0.1 ), Vector2( 0.2, 0.2 ) ]
 fire_mode = 0
 
@@ -238,3 +239,14 @@ parameters/conditions/IsADS = false
 parameters/conditions/IsMoving = false
 parameters/conditions/NotIsADS = true
 parameters/conditions/NotIsMoving = true
+
+[node name="AmmoLabel" type="Label" parent="."]
+margin_left = 20.0
+margin_top = 20.0
+margin_right = 40.0
+margin_bottom = 14.0
+custom_colors/font_color = Color( 1, 0, 0, 1 )
+text = "0/0"
+__meta__ = {
+"_edit_use_anchors_": false
+}

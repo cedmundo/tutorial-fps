@@ -16,12 +16,14 @@ export(float) var standing_accuracy = 60.0
 export(float) var walking_accuracy = 30.0
 export(float) var sprinting_accuracy = 10.0
 export(float) var accuracy_change_speed = 15.0
+export(int) var default_ammo = 12
 
 var velocity = Vector3.ZERO
 var gravity_vec = Vector3.ZERO
 var snap = Vector3.ZERO
 var target_accuracy : float
 var accuracy : float
+var ammo : int = default_ammo
 
 onready var camera = $Camera
 onready var weapon_camera = $Camera/WeaponViewport/Viewport/WeaponCamera
