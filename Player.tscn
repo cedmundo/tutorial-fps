@@ -1,112 +1,17 @@
-[gd_scene load_steps=24 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Player.gd" type="Script" id=1]
 [ext_resource path="res://assets/crosshair_dot.svg" type="Texture" id=2]
 [ext_resource path="res://assets/crosshair_vertical_bar.svg" type="Texture" id=3]
 [ext_resource path="res://assets/crosshair_horizontal_bar.svg" type="Texture" id=4]
 [ext_resource path="res://Crosshair.gd" type="Script" id=5]
-[ext_resource path="res://Weapon.gd" type="Script" id=6]
-
-[sub_resource type="SpatialMaterial" id=1]
-albedo_color = Color( 0.411765, 0.447059, 0.580392, 1 )
-
-[sub_resource type="CubeMesh" id=2]
-material = SubResource( 1 )
-size = Vector3( 0.2, 0.2, 2 )
+[ext_resource path="res://AssaultRifle.tscn" type="PackedScene" id=6]
 
 [sub_resource type="CapsuleShape" id=3]
 height = 1.7
 
 [sub_resource type="CapsuleMesh" id=4]
 mid_height = 1.7
-
-[sub_resource type="Animation" id=5]
-resource_name = "ADS"
-length = 0.1
-tracks/0/type = "value"
-tracks/0/path = NodePath("Camera/Weapon:translation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ Vector3( 0, -0.211, -0.884 ) ]
-}
-
-[sub_resource type="Animation" id=6]
-resource_name = "Steady"
-length = 0.1
-loop = true
-tracks/0/type = "value"
-tracks/0/path = NodePath("Camera/Weapon:translation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ Vector3( 0.343985, -0.409321, -0.883709 ) ]
-}
-
-[sub_resource type="Animation" id=7]
-resource_name = "Sway"
-length = 2.0
-loop = true
-tracks/0/type = "value"
-tracks/0/path = NodePath("Camera/Weapon:translation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.5, 1, 1.5, 2 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
-"update": 0,
-"values": [ Vector3( 0.343985, -0.409321, -0.883709 ), Vector3( 0.244, -0.409, -0.884 ), Vector3( 0.343985, -0.409321, -0.883709 ), Vector3( 0.444, -0.409, -0.884 ), Vector3( 0.343985, -0.409321, -0.883709 ) ]
-}
-
-[sub_resource type="AnimationNodeAnimation" id=8]
-animation = "ADS"
-
-[sub_resource type="AnimationNodeAnimation" id=9]
-animation = "Steady"
-
-[sub_resource type="AnimationNodeAnimation" id=10]
-animation = "Sway"
-
-[sub_resource type="AnimationNodeStateMachineTransition" id=11]
-advance_condition = "IsADS"
-xfade_time = 0.2
-
-[sub_resource type="AnimationNodeStateMachineTransition" id=12]
-advance_condition = "NotIsADS"
-
-[sub_resource type="AnimationNodeStateMachineTransition" id=13]
-advance_condition = "IsMoving"
-
-[sub_resource type="AnimationNodeStateMachineTransition" id=14]
-advance_condition = "NotIsMoving"
-
-[sub_resource type="AnimationNodeStateMachineTransition" id=15]
-advance_condition = "IsADS"
-xfade_time = 0.2
-
-[sub_resource type="AnimationNodeStateMachine" id=16]
-states/ADS/node = SubResource( 8 )
-states/ADS/position = Vector2( 640, 90 )
-states/Steady/node = SubResource( 9 )
-states/Steady/position = Vector2( 366, 90 )
-states/Sway/node = SubResource( 10 )
-states/Sway/position = Vector2( 511, 224 )
-transitions = [ "Steady", "ADS", SubResource( 11 ), "ADS", "Steady", SubResource( 12 ), "Steady", "Sway", SubResource( 13 ), "Sway", "Steady", SubResource( 14 ), "Sway", "ADS", SubResource( 15 ) ]
-start_node = "Steady"
-
-[sub_resource type="AnimationNodeStateMachinePlayback" id=17]
 
 [node name="Player" type="KinematicBody"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.85, 0 )
@@ -120,24 +25,7 @@ horizontal_sensibility = 0.2
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.20406, 0 )
 cull_mask = 1048573
 
-[node name="Weapon" type="MeshInstance" parent="Camera"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.343985, -0.409321, -0.883709 )
-layers = 3
-mesh = SubResource( 2 )
-material/0 = null
-script = ExtResource( 6 )
-aim_ray_path = NodePath("../AimRay")
-camera_path = NodePath("..")
-muzzle_path = NodePath("Muzzle")
-player_path = NodePath("../..")
-animation_tree_path = NodePath("../../AnimationTree")
-crosshair_path = NodePath("../../Crosshair")
-ammo_label_path = NodePath("../../AmmoLabel")
-recoil_pattern = [ Vector2( 0.5, 0.5 ), Vector2( 0.1, 0.1 ), Vector2( 0.2, 0.2 ) ]
-fire_mode = 0
-
-[node name="Muzzle" type="Spatial" parent="Camera/Weapon"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.03934 )
+[node name="AssaultRifle" parent="Camera" instance=ExtResource( 6 )]
 
 [node name="WeaponViewport" type="ViewportContainer" parent="Camera"]
 anchor_right = 1.0
@@ -167,11 +55,6 @@ shape = SubResource( 3 )
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0 )
 mesh = SubResource( 4 )
 material/0 = null
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/ADS = SubResource( 5 )
-anims/Steady = SubResource( 6 )
-anims/Sway = SubResource( 7 )
 
 [node name="Crosshair" type="VBoxContainer" parent="."]
 anchor_left = 0.5
@@ -229,16 +112,6 @@ margin_right = 58.0
 margin_bottom = 58.0
 texture = ExtResource( 3 )
 stretch_mode = 4
-
-[node name="AnimationTree" type="AnimationTree" parent="."]
-tree_root = SubResource( 16 )
-anim_player = NodePath("../AnimationPlayer")
-active = true
-parameters/playback = SubResource( 17 )
-parameters/conditions/IsADS = false
-parameters/conditions/IsMoving = false
-parameters/conditions/NotIsADS = true
-parameters/conditions/NotIsMoving = true
 
 [node name="AmmoLabel" type="Label" parent="."]
 margin_left = 20.0

@@ -1,4 +1,4 @@
-extends MeshInstance
+extends Spatial
 
 enum FireMode {
 	FULL_AUTO,

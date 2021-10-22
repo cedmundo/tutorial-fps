@@ -28,9 +28,9 @@ var ammo : int = default_ammo
 onready var camera = $Camera
 onready var weapon_camera = $Camera/WeaponViewport/Viewport/WeaponCamera
 onready var aim_ray = $Camera/AimRay
-onready var muzzle = $Camera/Weapon/Muzzle
+onready var muzzle = $Camera/AssaultRifle/Muzzle
+onready var weapon = $Camera/AssaultRifle
 onready var crosshair = $Crosshair
-onready var weapon = $Camera/Weapon
 
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
