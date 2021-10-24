@@ -1,3 +1,4 @@
+class_name Weapon
 extends Spatial
 
 enum FireMode {
@@ -5,13 +6,16 @@ enum FireMode {
 	SEMI_AUTO
 }
 
+enum AmmoType {
+	MEDIUM_CALIBER,
+	SMALL_CALIBER,
+}
+
 const aim_pushback_offset = 0.1
 
 export(NodePath) var aim_ray_path : NodePath
 export(NodePath) var camera_path : NodePath
-export(NodePath) var muzzle_path : NodePath
 export(NodePath) var player_path : NodePath
-export(NodePath) var animation_tree_path : NodePath
 export(NodePath) var crosshair_path : NodePath
 export(NodePath) var ammo_label_path : NodePath
 export(Array, Vector2) var recoil_pattern : Array
@@ -20,14 +24,17 @@ export(float) var ads_accuracy_bonus = 30.0
 export(FireMode) var fire_mode = FireMode.SEMI_AUTO
 export(float) var fire_rate_secs = 0.2
 export(int) var magazine_capacity = 5
+export(AmmoType) var ammo_type = AmmoType.MEDIUM_CALIBER
+export(bool) var is_active = false
 
 onready var aim_ray = get_node(aim_ray_path)
 onready var camera = get_node(camera_path)
-onready var muzzle = get_node(muzzle_path)
 onready var player = get_node(player_path)
-onready var animation_tree = get_node(animation_tree_path)
 onready var crosshair = get_node(crosshair_path)
 onready var ammo_label = get_node(ammo_label_path)
+onready var muzzle = $Muzzle
+onready var animation_tree = $AnimationTree
+onready var magazine = magazine_capacity
 
 var recoil_position = 0
 var accuracy_bonus : float
@@ -35,9 +42,11 @@ var accuracy : float
 var is_ads = false
 var is_moving = false
 var is_shooting = false
-var magazine = magazine_capacity
 	
 func _process(_delta):
+	if not is_active:
+		return
+		
 	if Input.is_action_just_pressed("ads"):
 		accuracy_bonus = ads_accuracy_bonus
 		is_ads = true
@@ -64,7 +73,7 @@ func _process(_delta):
 	if Input.is_action_just_pressed("reload"):
 		reload()
 		
-	ammo_label.text = "Ammo: %s/%s" % [magazine, player.ammo]
+	ammo_label.text = "Ammo: %s/%s" % [magazine, player.ammo[ammo_type]]
 		
 	# Update animation tree parameters
 	animation_tree.set("parameters/conditions/IsADS", is_ads)
@@ -111,10 +120,10 @@ func shoot():
 
 func reload():
 	var missing = magazine_capacity - magazine
-	var taking = min(missing, player.ammo)
-	if missing == 0 or player.ammo == 0:
+	var taking = min(missing, player.ammo[ammo_type])
+	if missing == 0 or player.ammo[ammo_type] == 0:
 		return
 		
-	player.ammo = player.ammo - taking
+	player.ammo[ammo_type] = player.ammo[ammo_type] - taking
 	magazine = magazine + taking
-	print("capacity: ", magazine_capacity, " magazine: ", magazine, " taking: ", taking, " missing: ", missing, " ammo: ", player.ammo)
+	print("capacity: ", magazine_capacity, " magazine: ", magazine, " taking: ", taking, " missing: ", missing, " ammo: ", player.ammo[ammo_type])

@@ -16,25 +16,26 @@ export(float) var standing_accuracy = 60.0
 export(float) var walking_accuracy = 30.0
 export(float) var sprinting_accuracy = 10.0
 export(float) var accuracy_change_speed = 15.0
-export(int) var default_ammo = 12
+export(Array, int) var default_ammo = [120, 30]
+export(NodePath) var default_weapon_path : NodePath
 
 var velocity = Vector3.ZERO
 var gravity_vec = Vector3.ZERO
 var snap = Vector3.ZERO
 var target_accuracy : float
 var accuracy : float
-var ammo : int = default_ammo
+var ammo : Array = default_ammo
+var weapon : Weapon
 
 onready var camera = $Camera
 onready var weapon_camera = $Camera/WeaponViewport/Viewport/WeaponCamera
 onready var aim_ray = $Camera/AimRay
-onready var muzzle = $Camera/AssaultRifle/Muzzle
-onready var weapon = $Camera/AssaultRifle
 onready var crosshair = $Crosshair
 
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	target_accuracy = standing_accuracy
+	_enable_weapon(get_node(default_weapon_path))
 
 func _input(event):
 	if event is InputEventMouseMotion:
@@ -57,6 +58,12 @@ func _process(delta):
 	accuracy = lerp(accuracy, target_accuracy + weapon.accuracy_bonus, accuracy_change_speed * delta)
 	crosshair.accuracy = accuracy
 	weapon.accuracy = accuracy
+	
+	if Input.is_action_just_pressed("switch_weapon_1"):
+		_enable_weapon($Camera/Weapons/AssaultRifle)
+		
+	if Input.is_action_just_pressed("switch_weapon_2"):
+		_enable_weapon($Camera/Weapons/Pistol)
 
 func _physics_process(delta):
 	var input_strength : Vector2 = Vector2.ZERO
@@ -109,3 +116,12 @@ func _physics_process(delta):
 		target_accuracy = standing_accuracy
 		weapon.is_moving = false
 
+func _enable_weapon(new_weapon):
+	if weapon:
+		weapon.visible = false
+		weapon.is_active = false
+		
+	weapon = new_weapon
+	weapon.visible = true
+	weapon.is_active = true
+		

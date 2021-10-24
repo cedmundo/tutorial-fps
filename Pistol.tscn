@@ -3,11 +3,11 @@
 [ext_resource path="res://Weapon.gd" type="Script" id=1]
 
 [sub_resource type="SpatialMaterial" id=1]
-albedo_color = Color( 0.411765, 0.447059, 0.580392, 1 )
+albedo_color = Color( 0.827451, 0.356863, 1, 1 )
 
 [sub_resource type="CubeMesh" id=2]
 material = SubResource( 1 )
-size = Vector3( 0.2, 0.2, 2 )
+size = Vector3( 0.1, 0.2, 1 )
 
 [sub_resource type="Animation" id=3]
 resource_name = "ADS"
@@ -96,13 +96,13 @@ start_node = "Steady"
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=15]
 
-[node name="AssaultRifle" type="Spatial"]
+[node name="Pistol" type="Spatial"]
 script = ExtResource( 1 )
-recoil_pattern = [ Vector2( 0, 0.9 ) ]
-ads_accuracy_bonus = 40.0
-fire_mode = 0
-fire_rate_secs = 0.1
-magazine_capacity = 30
+recoil_pattern = [ Vector2( 0.8, 0 ) ]
+damage = 10.0
+fire_rate_secs = 0.5
+magazine_capacity = 10
+ammo_type = 1
 
 [node name="Mesh" type="MeshInstance" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.343985, -0.409321, -0.883709 )
