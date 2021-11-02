@@ -33,7 +33,7 @@ onready var camera = get_node(camera_path)
 onready var player = get_node(player_path)
 onready var crosshair = get_node(crosshair_path)
 onready var ammo_label = get_node(ammo_label_path)
-onready var muzzle = $Muzzle
+onready var muzzle = $Mesh/Muzzle
 onready var animation_tree = $AnimationTree
 onready var magazine = magazine_capacity
 

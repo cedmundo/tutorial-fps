@@ -22,7 +22,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector3( 0, -0.211, -0.884 ) ]
+"values": [ Vector3( 0.3, 0, -0.9 ) ]
 }
 
 [sub_resource type="Animation" id=4]
@@ -38,7 +38,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector3( 0.343985, -0.409321, -0.883709 ) ]
+"values": [ Vector3( 0.6, 0, -0.924 ) ]
 }
 
 [sub_resource type="Animation" id=5]
@@ -55,7 +55,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0, 0.5, 1, 1.5, 2 ),
 "transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
 "update": 0,
-"values": [ Vector3( 0.343985, -0.409321, -0.883709 ), Vector3( 0.244, -0.409, -0.884 ), Vector3( 0.343985, -0.409321, -0.883709 ), Vector3( 0.444, -0.409, -0.884 ), Vector3( 0.343985, -0.409321, -0.883709 ) ]
+"values": [ Vector3( 0.6, 0, -0.924 ), Vector3( 0.6, -0.1, -0.924 ), Vector3( 0.6, 0, -0.924 ), Vector3( 0.6, 0.1, -0.924 ), Vector3( 0.6, 0, -0.924 ) ]
 }
 
 [sub_resource type="AnimationNodeAnimation" id=6]
@@ -104,13 +104,13 @@ magazine_capacity = 1
 ammo_type = 2
 
 [node name="Mesh" type="MeshInstance" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.343985, -0.409321, -0.883709 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6, 0, -0.924 )
 layers = 3
 mesh = SubResource( 2 )
 material/0 = null
 
-[node name="Muzzle" type="Spatial" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.343985, -0.409321, -1.92305 )
+[node name="Muzzle" type="Spatial" parent="Mesh"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.03617 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/ADS = SubResource( 3 )

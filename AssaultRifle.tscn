@@ -110,8 +110,8 @@ layers = 3
 mesh = SubResource( 2 )
 material/0 = null
 
-[node name="Muzzle" type="Spatial" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.343985, -0.409321, -1.92305 )
+[node name="Muzzle" type="Spatial" parent="Mesh"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.03934 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/ADS = SubResource( 3 )
