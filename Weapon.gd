@@ -9,6 +9,7 @@ enum FireMode {
 enum AmmoType {
 	MEDIUM_CALIBER,
 	SMALL_CALIBER,
+	ROCKETS,
 }
 
 const aim_pushback_offset = 0.1
