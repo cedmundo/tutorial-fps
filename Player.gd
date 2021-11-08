@@ -21,6 +21,7 @@ export(NodePath) var default_weapon_path : NodePath
 export(NodePath) var weapon_1_path : NodePath
 export(NodePath) var weapon_2_path : NodePath
 export(NodePath) var weapon_3_path : NodePath
+export(NodePath) var weapon_4_path : NodePath
 
 var velocity = Vector3.ZERO
 var gravity_vec = Vector3.ZERO
@@ -28,7 +29,7 @@ var snap = Vector3.ZERO
 var target_accuracy : float
 var accuracy : float
 var ammo : Array = default_ammo
-var weapon : Weapon
+var weapon
 
 onready var camera = $Camera
 onready var weapon_camera = $Camera/WeaponViewport/Viewport/WeaponCamera
@@ -37,6 +38,7 @@ onready var crosshair = $Crosshair
 onready var weapon_1 = get_node(weapon_1_path)
 onready var weapon_2 = get_node(weapon_2_path)
 onready var weapon_3 = get_node(weapon_3_path)
+onready var weapon_4 = get_node(weapon_4_path)
 
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
@@ -73,6 +75,9 @@ func _process(delta):
 		
 	if Input.is_action_just_pressed("switch_weapon_3"):
 		_enable_weapon(weapon_3)
+		
+	if Input.is_action_just_pressed("switch_weapon_4"):
+		_enable_weapon(weapon_4)
 
 func _physics_process(delta):
 	var input_strength : Vector2 = Vector2.ZERO

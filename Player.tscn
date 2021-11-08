@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Player.gd" type="Script" id=1]
 [ext_resource path="res://assets/crosshair_dot.svg" type="Texture" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://AssaultRifle.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Pistol.tscn" type="PackedScene" id=7]
 [ext_resource path="res://RocketLauncher.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Hammer.tscn" type="PackedScene" id=9]
 
 [sub_resource type="CapsuleShape" id=1]
 height = 1.7
@@ -26,6 +27,7 @@ default_weapon_path = NodePath("Camera/Weapons/AssaultRifle")
 weapon_1_path = NodePath("Camera/Weapons/AssaultRifle")
 weapon_2_path = NodePath("Camera/Weapons/Pistol")
 weapon_3_path = NodePath("Camera/Weapons/RocketLauncher")
+weapon_4_path = NodePath("Camera/Weapons/Hammer")
 
 [node name="Camera" type="Camera" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.20406, 0 )
@@ -55,6 +57,10 @@ aim_ray_path = NodePath("../../AimRay")
 camera_path = NodePath("../..")
 player_path = NodePath("../../..")
 crosshair_path = NodePath("../../../Crosshair")
+ammo_label_path = NodePath("../../../AmmoLabel")
+
+[node name="Hammer" parent="Camera/Weapons" instance=ExtResource( 9 )]
+visible = false
 ammo_label_path = NodePath("../../../AmmoLabel")
 
 [node name="WeaponViewport" type="ViewportContainer" parent="Camera"]
