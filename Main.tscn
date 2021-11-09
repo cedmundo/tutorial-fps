@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://Player.tscn" type="PackedScene" id=1]
-[ext_resource path="res://Enemy.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Enemies.gd" type="Script" id=3]
 
 [sub_resource type="SpatialMaterial" id=1]
 albedo_color = Color( 0.34902, 0.34902, 0.34902, 1 )
@@ -12,34 +12,42 @@ albedo_color = Color( 0.34902, 0.34902, 0.34902, 1 )
 use_collision = true
 
 [node name="Floor" type="CSGBox" parent="Map"]
-width = 40.0
+width = 100.0
 height = 0.1
-depth = 40.0
+depth = 100.0
 material = SubResource( 1 )
 
 [node name="Wall" type="CSGBox" parent="Map"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.56989, -1.21587 )
-width = 9.55844
-height = 5.04764
-depth = 0.349742
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, -50 )
+width = 100.0
+height = 10.0
+depth = 0.1
 
-[node name="Platform" type="CSGBox" parent="Map"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.51195, 9.64029 )
-width = 8.24135
-height = 0.505652
-depth = 6.6358
+[node name="Wall2" type="CSGBox" parent="Map"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 50 )
+width = 100.0
+height = 10.0
+depth = 0.1
+
+[node name="Wall3" type="CSGBox" parent="Map"]
+transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 50, 5, 2.18557e-06 )
+width = 100.0
+height = 10.0
+depth = 0.1
+
+[node name="Wall4" type="CSGBox" parent="Map"]
+transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -50, 5, -2.18557e-06 )
+width = 100.0
+height = 10.0
+depth = 0.1
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.64922, 10.0244 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.79695, 10.0244 )
 
-[node name="Enemy" parent="." instance=ExtResource( 2 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -15.5345, 1.85, 13.0921 )
-
-[node name="Enemy2" parent="." instance=ExtResource( 2 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -15.5345, 1.85, -13.8682 )
-
-[node name="Enemy3" parent="." instance=ExtResource( 2 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 9.46287, 1.85, -14.0093 )
+[node name="Enemies" type="Spatial" parent="."]
+script = ExtResource( 3 )
+wave_sizes = [ 3, 6, 12 ]
+player_path = NodePath("../Player")
 
 [node name="DirectionalLight" type="DirectionalLight" parent="."]
 transform = Transform( 1, 0, 0, 0, 0.83907, 0.544024, 0, -0.544024, 0.83907, 0, 12.6617, 12.2597 )
