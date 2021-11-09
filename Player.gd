@@ -17,6 +17,7 @@ export(float) var walking_accuracy = 30.0
 export(float) var sprinting_accuracy = 10.0
 export(float) var accuracy_change_speed = 15.0
 export(Array, int) var default_ammo = [120, 30, 5]
+export(float) var default_health = 100.0
 export(NodePath) var default_weapon_path : NodePath
 export(NodePath) var weapon_1_path : NodePath
 export(NodePath) var weapon_2_path : NodePath
@@ -28,17 +29,22 @@ var gravity_vec = Vector3.ZERO
 var snap = Vector3.ZERO
 var target_accuracy : float
 var accuracy : float
+var is_alive : bool = true
 var ammo : Array = default_ammo
+var killed_units : int = 0
 var weapon
 
 onready var camera = $Camera
 onready var weapon_camera = $Camera/WeaponViewport/Viewport/WeaponCamera
 onready var aim_ray = $Camera/AimRay
 onready var crosshair = $Crosshair
+onready var health_label = $HealthLabel
+onready var score_label = $ScoreLabel
 onready var weapon_1 = get_node(weapon_1_path)
 onready var weapon_2 = get_node(weapon_2_path)
 onready var weapon_3 = get_node(weapon_3_path)
 onready var weapon_4 = get_node(weapon_4_path)
+onready var health : float = default_health
 
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
@@ -46,6 +52,9 @@ func _ready():
 	_enable_weapon(get_node(default_weapon_path))
 
 func _input(event):
+	if not is_alive:
+		return
+		
 	if event is InputEventMouseMotion:
 		var coords = -event.get_relative()
 		rotate_y(deg2rad(coords.x * horizontal_sensibility))
@@ -60,6 +69,15 @@ func _input(event):
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 
 func _process(delta):
+	if not is_alive:
+		return
+		
+	if health <= 0.0:
+		is_alive = false
+		return
+		
+	health_label.text = "Health: %d" % [health]
+	score_label.text = "Killed: %d" % [killed_units]
 	weapon_camera.global_transform = camera.global_transform
 	
 	# Visualize the accuracy
@@ -80,6 +98,9 @@ func _process(delta):
 		_enable_weapon(weapon_4)
 
 func _physics_process(delta):
+	if not is_alive:
+		return
+		
 	var input_strength : Vector2 = Vector2.ZERO
 	input_strength.x = (
 		Input.get_action_strength("right") -

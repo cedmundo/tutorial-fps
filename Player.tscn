@@ -34,6 +34,8 @@ weapon_4_path = NodePath("Camera/Weapons/Hammer")
 [node name="Camera" type="Camera" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.20406, 0 )
 cull_mask = 1048573
+fov = 80.0
+far = 300.0
 
 [node name="Weapons" type="Spatial" parent="Camera"]
 
@@ -158,6 +160,31 @@ margin_right = 40.0
 margin_bottom = 14.0
 custom_colors/font_color = Color( 1, 0, 0, 1 )
 text = "0/0"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HealthLabel" type="Label" parent="."]
+margin_left = 19.0
+margin_top = 37.0
+margin_right = 59.0
+margin_bottom = 51.0
+custom_colors/font_color = Color( 0, 1, 0.231373, 1 )
+text = "100"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ScoreLabel" type="Label" parent="."]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -20.0
+margin_top = 23.0
+margin_right = 20.0
+margin_bottom = 37.0
+custom_colors/font_color = Color( 1, 0.560784, 0.223529, 1 )
+text = "0"
+align = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }

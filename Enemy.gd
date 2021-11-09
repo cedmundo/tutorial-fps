@@ -5,9 +5,14 @@ export(float) var move_speed = 40.0
 export(float) var proximity_speed = 25.0
 export(float) var gravity = 9.8
 export(float) var attack_range = 3.0
+export(float) var damage = 10.0
+export(float) var damage_cooldown_secs = 2.0
 
 onready var health = max_health
 onready var reach_ray = $ReachRay
+onready var damage_cooldown_timer : SceneTreeTimer = (
+	get_tree().create_timer(0.0)
+)
 
 var target
 var velocity : Vector3
@@ -19,6 +24,7 @@ func deal_damage(amount):
 	health -= amount
 	if health <= 0:
 		health = 0
+		target.killed_units += 1
 		queue_free()
 
 	print(name, " ouch ... ", health)
@@ -47,7 +53,12 @@ func _move_towards_target(delta):
 	var enemy_position = global_transform.origin
 	var direction = target_position - enemy_position
 	if direction.length() < attack_range:
-		print(name, " in attack range")
+		if damage_cooldown_timer.time_left <= 0.0:
+			damage_cooldown_timer = get_tree().create_timer(
+				damage_cooldown_secs
+			)
+			target.health -= damage
+			
 		velocity = Vector3.ZERO
 	else:
 		velocity = direction * speed * delta

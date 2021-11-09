@@ -1,6 +1,6 @@
 extends Spatial
 
-export(bool) var is_spawning = true
+export(bool) var is_spawning = false
 export(Array, int) var wave_sizes : Array
 export(NodePath) var player_path : NodePath
 
